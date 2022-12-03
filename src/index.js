@@ -20,7 +20,17 @@ d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/w
         .join("path")
             .attr('class', 'country')
             .attr("d", d3.geoPath()
-                .projection(projection)
-            )
-            
-})
+            .projection(projection)
+            ).append('title')
+            .text(d => (d.properties.name))
+            .style("stroke", "black");
+
+  
+});
+
+    const map = document.querySelector("#my_dataviz")
+    map.addEventListener("click",  (e) => {
+        console.log(e.target);
+    })
+
+

@@ -1,0 +1,7 @@
+.country {
+    fill: greenyellow;
+}
+
+.country:hover {
+    fill: red;
+}
