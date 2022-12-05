@@ -1,7 +1,23 @@
-.country {
-    fill: greenyellow;
+.map {
+    fill: lightgreen;
+    stroke: black;
+    stroke-width: 0.1;
 }
 
-.country:hover {
-    fill: red;
+.map:hover {
+    fill: white;
 }
+
+
+/* div.tooltip {   
+    position: absolute;         
+    text-align: center;         
+    width: 80px;                    
+    height: 28px;                   
+    padding: 2px;               
+    font: 12px sans-serif;      
+    background: lightsteelblue; 
+    border: 0px;        
+    border-radius: 8px;         
+    pointer-events: none;           
+} */
