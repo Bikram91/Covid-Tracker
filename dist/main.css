@@ -12,18 +12,18 @@
 }
 
 
-/* div.tooltip {   
+div.tooltip {   
     position: absolute;         
     text-align: center;         
     width: 80px;                    
-    height: 28px;                   
+    height: auto;                   
     padding: 2px;               
     font: 12px sans-serif;      
-    background: lightsteelblue; 
+    background: white; 
     border: 0px;        
     border-radius: 8px;         
     pointer-events: none;           
-} */
+}
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
   \*************************************************************************************************************************************/
