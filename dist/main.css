@@ -36,10 +36,9 @@ div.tooltip {
 
 
 nav{
-    padding: 20;
     margin: 0px;
     display: flex; 
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     min-height: 8vh;
     background-color: #5D4954;
@@ -103,7 +102,7 @@ nav{
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 20%;
+        width: 50%;
         transform: translate(100%);
         transition: transform 0.5s ease-in;
 
@@ -130,6 +129,17 @@ nav{
         transform: translateX(0px);
     }
  }
+
+
+.chartBox{
+    /* position: absolute; */
+    padding: 40;
+    width: 600px;
+    height: 450px;
+    display: flex;  
+}
+
+
 
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!

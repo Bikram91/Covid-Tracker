@@ -78,7 +78,7 @@ color()
     });
   });
 
-chart1();
+// chart1();
 
 const get_data = async (ele) => {
   if (typeof ele === "undefined") {
@@ -86,7 +86,8 @@ const get_data = async (ele) => {
   } else {
     try {
       let res = await fetch(
-        `https://api.covid19api.com/total/country/${ele}/status/confirmed?from=2020-03-01T00:00:00Z&to=2022-04-01T00:00:00Z`
+        `https://api.covid19api.com/country/${ele}?from=2020-03-01T00:00:00Z&to=2022-12-01T00:00:00Z`
+        // `https://api.covid19api.com/total/country/${ele}/status/confirmed?from=2020-03-01T00:00:00Z&to=2022-12-01T00:00:00Z`
         // `https://api.covid19api.com/live/country/${ele}/status/confirmed/date/2022-09-10T13:13:30Z`
       );
       return await res.json();
@@ -97,6 +98,8 @@ const get_data = async (ele) => {
 };
 let world_map = document.querySelector("#my_dataviz");
 let array_of_active_cases = [];
+let array_of_date = [];
+let array_of_deaths_cases = [];
  
   world_map.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -106,18 +109,19 @@ let array_of_active_cases = [];
     let dataDiv = document.querySelector("#data");
     let deathsDiv = document.querySelector("#deaths");
     let countrynameDiv = document.querySelector(".country-name");
-    console.log(e.target.tagName);
+
     //  const data1 = await get_data(name_of_country);
     if (e.target.tagName === "path") {
       const a = titleHtml.querySelector("country");
       const name_of_country = a.innerHTML;
-      console.log(name_of_country);
       const data1 = await get_data(name_of_country);
-      // console.log(data1)
+    //  console.log(data1)
       //   let no_of_deaths = 0;
-      for (let i = 0; i < data1.length; i++) {
-        array_of_active_cases.push(data1[i].Cases);
-        //     no_of_deaths += data1[i].Deaths;
+      for (let i = 0; i < data1.length - 91; i+=90) {
+        array_of_active_cases.push((data1[i].Confirmed));
+
+        array_of_date.push(data1[i].Date.slice(0,10))
+        array_of_deaths_cases.push(data1[i].Deaths)
       }
      
       //   countrynameDiv.innerHTML = `Country: ${name_of_country}`;
@@ -128,7 +132,64 @@ let array_of_active_cases = [];
       //   deathsDiv.innerHTML = "";
       //   countrynameDiv.innerHTML = "";
 
-      console.log(array_of_active_cases)
+      
+
+              function chart2() {
+              const abcd1 = document.getElementById('chart1').getContext('2d');
+              let popChart1 = new Chart(abcd1, {
+                    type: 'line',
+                    data: {
+                      labels: array_of_date,
+                      datasets: [{
+                        label: `Total covid cases in ${name_of_country}`,
+                        data: array_of_active_cases, 
+                        backgroundColor:'yellow',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        tension: 0.4
+                      }],
+                    },
+                    options: {
+                      maintainAspectRatio: false,
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+              })
+            }
+
+            chart2()
+
+
+
+
+            function chart6() {
+              const abcd1 = document.getElementById('chart5').getContext('2d');
+              let popChart5 = new Chart(abcd1, {
+                    type: 'line',
+                    data: {
+                      labels: array_of_date,
+                      datasets: [{
+                        label: `Total deaths cases in ${name_of_country}`,
+                        data: array_of_deaths_cases, 
+                        backgroundColor:'yellow',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        tension: 0.4
+                      }],
+                    },
+                    options: {
+                      maintainAspectRatio: false,
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+              })
+            }
+
+            chart6()
       
     }
   });
