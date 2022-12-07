@@ -1,5 +1,6 @@
 export default function chart1(){
 const myChart = document.getElementById('chart').getContext('2d');
+  const xlabels = [];
 
 let popChart = new Chart(myChart, {
   type: 'bar',

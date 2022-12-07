@@ -41,12 +41,12 @@ nav{
     justify-content:space-around;
     align-items: center;
     min-height: 8vh;
-    background-color:cadetblue;
+    background-color:darkgrey;
     font-family: 'Poppins', sans-serif;
  }
 
  .logo{
-    color:bisque;
+    color: white;
     text-transform: uppercase;
     letter-spacing: 5x;
     font-size: 20px;
@@ -59,7 +59,7 @@ nav{
  }
 
  .nav-links a{
-    color:bisque;
+    color: white;
     text-decoration: none;
     letter-spacing: 3px;
     font-weight: bold;
@@ -78,7 +78,7 @@ nav{
  .burger div{
     width: 25px;
     height: 3px;
-    background-color: bisque;
+    background-color: white;
     margin: 5px;
  }
 
@@ -102,7 +102,7 @@ nav{
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 30%;
+        width: 50%;
         transform: translate(100%);
         transition: transform 0.5s ease-in;
 
@@ -116,9 +116,19 @@ nav{
  }
 
  .nav-active{
-    transform: translate(0%);
+    transform: translateX(0%);
  }
 
+ @keyframes navLinkFade {
+    from{
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+ }
 
 /*!*************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!

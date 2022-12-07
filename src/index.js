@@ -101,35 +101,39 @@ let world_map = document.querySelector("#my_dataviz");
 world_map.addEventListener("click", async (e) => {
   e.preventDefault();
   const titleHtml = e.path[0];
-
-  let dataDiv = document.querySelector("#data");
-  let deathsDiv = document.querySelector("#deaths");
-  let countrynameDiv = document.querySelector(".country-name");
+  const a = titleHtml.querySelector("country");
+  console.log(a.innerHTML)
   
-  if (e.target.tagName === "path") {
-    const a = titleHtml.querySelector("country");
-    
-    const name_of_country = a.innerHTML;
 
-    const data1 = await get_data(name_of_country);
+
+  // let dataDiv = document.querySelector("#data");
+  // let deathsDiv = document.querySelector("#deaths");
+  // let countrynameDiv = document.querySelector(".country-name");
+  
+  // if (e.target.tagName === "path") {
+  //   const a = titleHtml.querySelector("country");
+    
+  //   const name_of_country = a.innerHTML;
+
+  //   const data1 = await get_data(name_of_country);
    
-    let sum_of_active_cases = 0;
-    let no_of_deaths = 0;
+  //   let sum_of_active_cases = 0;
+  //   let no_of_deaths = 0;
     
-    for (let i = 0; i < data1.length; i++) {
+  //   for (let i = 0; i < data1.length; i++) {
       
-      sum_of_active_cases += data1[i].Active;
-      no_of_deaths += data1[i].Deaths;
-    }
+  //     sum_of_active_cases += data1[i].Active;
+  //     no_of_deaths += data1[i].Deaths;
+  //   }
 
-    countrynameDiv.innerHTML = `Country: ${name_of_country}`;
-    dataDiv.innerHTML = `Active cases: ${sum_of_active_cases}`;
-    deathsDiv.innerHTML = `Deaths cases: ${no_of_deaths}`;
-  } else {
-    dataDiv.innerHTML = "";
-    deathsDiv.innerHTML = "";
-    countrynameDiv.innerHTML = "";
-  }
+  //   countrynameDiv.innerHTML = `Country: ${name_of_country}`;
+  //   dataDiv.innerHTML = `Active cases: ${sum_of_active_cases}`;
+  //   deathsDiv.innerHTML = `Deaths cases: ${no_of_deaths}`;
+  // } else {
+  //   dataDiv.innerHTML = "";
+  //   deathsDiv.innerHTML = "";
+  //   countrynameDiv.innerHTML = "";
+  // }
 });
 
 const tooltipDiv = d3
