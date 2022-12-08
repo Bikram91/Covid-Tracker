@@ -237,7 +237,7 @@ world_map.addEventListener("mouseover", async (e) => {
     tooltipDiv.transition().duration(200).style("opacity", 0.9);
     tooltipDiv
       .html(tooltipData)
-      .style("left",  x + 200 + "px")
+      .style("left",  x + 100 + "px")
       .style("top", y+ 100+ "px");
   }
 });
