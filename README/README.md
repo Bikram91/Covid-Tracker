@@ -26,5 +26,28 @@ A tool built to track global covid cases data and no. of deaths happened all ove
 
  # Screenshots Demonstration
 
- 1) Below is the detailed way to interact with my tool.
+ ## 1) Below is the detailed way to interact with my tool.
     ![Getting Started](diagram.png)
+
+## 2)  Once the page is loaded, it fetch the data from local file for coloration of all the countries as per legend defined.
+
+``` javascript
+    const all_data = async (ele) => {
+        try {
+            let res = await fetch(`./src/scripts/coviddata.JSON`);
+                return await res.json();
+        } catch (err) {
+                console.error(err);
+        }
+        };
+```
+
+
+# Technologies, Libraries, and API's
+
+
+1) D3.js
+2) Charts.js
+3) Data.CDC.gov
+4) Google Fonts API
+5) Font Awesome API
