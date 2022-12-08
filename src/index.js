@@ -89,6 +89,9 @@ let array_of_date = [];
 let array_of_deaths_cases = [];
 let popChart1;
 let popChart5;
+countryName.innerHTML = "Globally";
+countryTotalCases.innerHTML = "Total Active Cases: 651,595,573";
+countryTotalDeaths.innerHTML = "Total Deaths: 6,652,007";
 
 const get_data1 = async (ele) => {
   if (typeof ele === "undefined") {
@@ -107,9 +110,9 @@ const get_data1 = async (ele) => {
 
 world_map.addEventListener("click", async (e) => {
   e.preventDefault();
-  // array_of_active_cases = [];
-  // array_of_deaths_cases = [];
-  // array_of_date = [];
+  array_of_active_cases = [];
+  array_of_deaths_cases = [];
+  array_of_date = [];
   const titleHtml = e.path[0];
   let dataDiv = document.querySelector("#data");
   let deathsDiv = document.querySelector("#deaths");
@@ -234,8 +237,8 @@ world_map.addEventListener("mouseover", async (e) => {
     tooltipDiv.transition().duration(200).style("opacity", 0.9);
     tooltipDiv
       .html(tooltipData)
-      .style("left", x + "px")
-      .style("top", y + 100 + "px");
+      .style("left",  x + 200 + "px")
+      .style("top", y+ 100+ "px");
   }
 });
 

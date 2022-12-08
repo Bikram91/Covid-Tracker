@@ -21,10 +21,16 @@
   position: relative;
 }
 
+#main {
+  width: fit-content;
+  height: fit-content;
+  margin: 0 auto;
+}
+
 #heading {
-  margin: 10px;
+  margin: 20px;
   text-align: center;
-  font-size: 50px;
+  font-size: 40px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: indigo;
 }
