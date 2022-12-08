@@ -39,15 +39,11 @@ async function color() {
   for (let i = 0; i < result.Countries.length; i++) {
     let total_cases = result.Countries[i].TotalConfirmed;
     const countryN = result.Countries[i].Country;
-    if (total_cases < 100) {
-      total_cases = "#D8E0BB";
-    } else if (total_cases < 1000 && total_cases > 100) {
+    if (total_cases < 1000) {
       total_cases = "#D8E0BB";
     } else if (total_cases < 10000 && total_cases > 1000) {
       total_cases = "#b6cec7";
-    } else if (total_cases < 100000 && total_cases > 10000) {
-      total_cases = "#86a3c3";
-    } else if (total_cases < 1000000 && total_cases > 100000) {
+    } else if (total_cases < 1000000 && total_cases > 10000) {
       total_cases = "#86a3c3";
     } else if (total_cases < 10000000 && total_cases > 1000000) {
       total_cases = "#7268A6";
@@ -80,6 +76,10 @@ color()
 
 // chart1();
 
+const get_dummy_data = async () => {
+
+}
+
 const get_data = async (ele) => {
   if (typeof ele === "undefined") {
     return "";
@@ -100,6 +100,8 @@ let world_map = document.querySelector("#my_dataviz");
 let array_of_active_cases = [];
 let array_of_date = [];
 let array_of_deaths_cases = [];
+let popChart1;
+let popChart5;
  
   world_map.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -132,18 +134,23 @@ let array_of_deaths_cases = [];
       //   deathsDiv.innerHTML = "";
       //   countrynameDiv.innerHTML = "";
 
-      
-
+              
               function chart2() {
-              const abcd1 = document.getElementById('chart1').getContext('2d');
-              let popChart1 = new Chart(abcd1, {
+              const abcd1 = document.getElementById('chart1');
+              if (popChart1) {
+                popChart1.destroy();
+              }
+                console.log(abcd1.lastChild)
+              const abcd11 = abcd1.getContext('2d');
+              
+               popChart1 = new Chart(abcd11, {
                     type: 'line',
                     data: {
                       labels: array_of_date,
                       datasets: [{
                         label: `Total covid cases in ${name_of_country}`,
                         data: array_of_active_cases, 
-                        backgroundColor:'yellow',
+                        backgroundColor:'rgba(255, 99, 132, 1)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         tension: 0.4
                       }],
@@ -157,23 +164,28 @@ let array_of_deaths_cases = [];
                       }
                     }
               })
+              
             }
 
             chart2()
 
 
-
-
             function chart6() {
-              const abcd1 = document.getElementById('chart5').getContext('2d');
-              let popChart5 = new Chart(abcd1, {
+              const abcd5 = document.getElementById('chart5');
+              // abcd5.innerHTML = '';
+              const abcd51 = abcd5.getContext('2d');
+              if (popChart5) {
+                popChart5.destroy();
+              }
+
+              popChart5 = new Chart(abcd51, {
                     type: 'line',
                     data: {
                       labels: array_of_date,
                       datasets: [{
                         label: `Total deaths cases in ${name_of_country}`,
                         data: array_of_deaths_cases, 
-                        backgroundColor:'yellow',
+                        backgroundColor:'rgba(255, 99, 132, 1)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         tension: 0.4
                       }],
@@ -240,12 +252,12 @@ world_map.addEventListener("mouseover", async (e) => {
       sum_of_active_cases += data1[i].Active;
       no_of_deaths += data1[i].Deaths;
     }
-    const tooltipData = `${name_of_country}  <p>Active cases: ${sum_of_active_cases}</p>`;
+    const tooltipData = `<h4>${name_of_country}</h4>  <p>Active cases: ${sum_of_active_cases}</p>`;
     tooltipDiv.transition().duration(200).style("opacity", 0.9);
     tooltipDiv
       .html(tooltipData)
-      .style("left", x + 10 + "px")
-      .style("top", y - 10 + "px");
+      .style("left", (x) + "px")
+      .style("top", (y+100) + "px");
   }
 });
 

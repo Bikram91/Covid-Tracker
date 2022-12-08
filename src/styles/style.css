@@ -7,6 +7,48 @@
     fill:burlywood;
 }
 
+#meat {
+    display: flex;
+}
+
+#legend-body {
+    display: flex;
+    margin-left: 20px;
+    margin-top: 8px;
+    position: relative;
+}
+
+#heading {
+    margin: 10px;
+    text-align: center;
+    font-size: 50px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color:indigo;
+}
+
+#legend-cell {
+    width: 176px;
+    height: 24px;
+}
+
+#legend-value {
+    width: 176px;
+    height: 16px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+
+}
+#legend-body p {
+    color: black;
+    font-size: 15px;
+    vertical-align: middle;
+    position: absolute;
+    bottom: 0;
+    margin-left: 3px;
+    font-weight: bold;
+}
+
 
 div.tooltip {   
     position: absolute;         
@@ -15,7 +57,7 @@ div.tooltip {
     height: auto;                   
     padding: 2px;               
     font: 12px sans-serif;      
-    background-color:cadetblue; 
+    background-color: lightblue; 
     border: 0px;        
     border-radius: 8px;         
     pointer-events: none;           
@@ -34,12 +76,12 @@ div.tooltip {
 
 nav{
     margin: 0px;
-    display: flex; 
-    justify-content: space-around;
-    align-items: center;
+    display: flex;
     min-height: 8vh;
     background-color: #5D4954;
     font-family: 'Poppins', sans-serif;
+    align-items: center;
+    justify-content: space-between;
  }
 
  .logo{
@@ -47,20 +89,22 @@ nav{
     text-transform: uppercase;
     letter-spacing: 5x;
     font-size: 20px;
+    margin-left: 20px;
  }
 
  .nav-links{
     display: flex;
-    justify-content: space-around;
     width: 30%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
  }
 
- .nav-links a{
+ .nav-links a {
     color: white;
     text-decoration: none;
     letter-spacing: 3px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
  }
 
  .nav-links li{
@@ -131,9 +175,8 @@ nav{
 .chartBox{
     /* position: absolute; */
     padding: 40;
-    width: 600px;
-    height: 450px;
-    display: flex;  
+    width: 500px;
+    height: 40px;
 }
 
 
