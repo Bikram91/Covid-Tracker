@@ -28,7 +28,7 @@ A tool built to track global covid cases data and no. of deaths happened all ove
 
  ## 1) Below is the detailed way to interact with my tool.
 
-![Getting Started](diagram.jpg)
+![Getting Started](diagram.png)
 
 ## 2)  Once the page is loaded, it fetch the data from local file for coloration of all the countries as per legend defined.
 
