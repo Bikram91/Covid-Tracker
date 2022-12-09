@@ -238,7 +238,7 @@ world_map.addEventListener("mouseover", async (e) => {
     tooltipDiv
       .html(tooltipData)
       .style("left",  x + 20 + "px")
-      .style("top", y+ 100+ "px");
+      .style("top", y+ 100 + "px");
   }
 });
 
