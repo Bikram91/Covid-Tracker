@@ -1,8 +1,8 @@
 import navSlide from "./scripts/navbar";
 import chart1 from "./scripts/chartdata";
-import {Chart, registerables} from "chart.js"
+import { Chart, registerables } from "chart.js/auto";
 Chart.register(...registerables);
-
+console.log(Chart);
 navSlide();
 const width = 900;
 const height = 610;
