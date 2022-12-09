@@ -2,7 +2,6 @@ import navSlide from "./scripts/navbar";
 import chart1 from "./scripts/chartdata";
 import { Chart, registerables } from "chart.js/auto";
 Chart.register(...registerables);
-console.log(Chart);
 navSlide();
 const width = 900;
 const height = 610;
@@ -239,7 +238,7 @@ world_map.addEventListener("mouseover", async (e) => {
     tooltipDiv.transition().duration(200).style("opacity", 0.9);
     tooltipDiv
       .html(tooltipData)
-      .style("left",  x + 20 + "px")
+      .style("left",  x + 200 + "px")
       .style("top", y+ 100 + "px");
   }
 });
