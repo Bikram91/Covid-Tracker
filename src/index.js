@@ -20,6 +20,7 @@ let map_data = d3.json("./src/scripts/mapdata.JSON");
 const all_data = async (ele) => {
   try {
     let res = await fetch(`./src/scripts/coviddata.JSON`);
+    // console.log(res)
     return await res.json();
   } catch (err) {
     console.error(err);
@@ -29,6 +30,7 @@ const all_data = async (ele) => {
 let newArr = new Map();
 async function color() {
   let result = await all_data();
+
   for (let i = 0; i < result.Countries.length; i++) {
     let total_cases = result.Countries[i].TotalConfirmed;
     const countryN = result.Countries[i].Country;
@@ -72,8 +74,6 @@ const get_data = async (ele) => {
     try {
       let res = await fetch(
         `https://api.covid19api.com/country/${ele}?from=2020-03-01T00:00:00Z&to=2022-12-01T00:00:00Z`
-        // `https://api.covid19api.com/total/country/${ele}/status/confirmed?from=2020-03-01T00:00:00Z&to=2022-12-01T00:00:00Z`
-        // `https://api.covid19api.com/live/country/${ele}/status/confirmed/date/2022-09-10T13:13:30Z`
       );
       return await res.json();
     } catch (err) {
@@ -81,6 +81,8 @@ const get_data = async (ele) => {
     }
   }
 };
+
+
 let world_map = document.querySelector("#my_dataviz");
 let countryName = document.querySelector("#country-name");
 let countryTotalCases = document.querySelector("#country-total-cases");
@@ -91,48 +93,40 @@ let array_of_deaths_cases = [];
 let popChart1;
 let popChart5;
 countryName.innerHTML = "Globally";
-countryTotalCases.innerHTML = "Total Active Cases: 651,595,573";
-countryTotalDeaths.innerHTML = "Total Deaths: 6,652,007";
+countryTotalCases.innerHTML = "Total Cases: 651,595,573 <br> Total Deaths: 6,652,007";
 
-const get_data1 = async (ele) => {
-  if (typeof ele === "undefined") {
-    return "";
-  } else {
-    try {
-      let res = await fetch(
-        `https://api.covid19api.com/live/country/${ele}/status/confirmed/date/2022-09-10T13:13:30Z`
-      );
-      return await res.json();
-    } catch (err) {
-      console.error(err);
-    }
-  }
-};
+
 
 world_map.addEventListener("click", async (e) => {
+  
+  if (popChart5) {
+    popChart5.destroy();
+  }
+  if (popChart1) {
+    popChart1.destroy();
+  }
+
+  const loaderElement = document.querySelector('.loading')
+  const loaderClass = loaderElement.classList.add('loader')
+
+
   e.preventDefault();
   array_of_active_cases = [];
   array_of_deaths_cases = [];
   array_of_date = [];
-  const titleHtml = e.path[0];
-  let dataDiv = document.querySelector("#data");
-  let deathsDiv = document.querySelector("#deaths");
-  let countrynameDiv = document.querySelector(".country-name");
+  const titleHtml = e.target;
   if (e.target.tagName === "path") {
     const a = titleHtml.querySelector("country");
+
     const name_of_country = a.innerHTML;
     countryName.innerHTML = name_of_country;
-    const data2 = await get_data1(name_of_country);
 
-    let sum_of_active_cases = 0;
-    let no_of_deaths = 0;
-    for (let i = 0; i < data2.length; i++) {
-      sum_of_active_cases += data2[i].Active;
-      no_of_deaths += data2[i].Deaths;
-    }
-    countryTotalCases.innerHTML = `Total Active Cases: ${sum_of_active_cases}`;
-    countryTotalDeaths.innerHTML = `Total Deaths: ${no_of_deaths}`;
+    const clickData = await mouseOverData();
+    countryTotalCases.innerHTML = `${clickData[name_of_country]}`
+   
     const data1 = await get_data(name_of_country);
+    const loaderClass = loaderElement.classList.remove('loader')
+
     for (let i = 0; i < data1.length - 91; i += 90) {
       array_of_active_cases.push(data1[i].Confirmed);
 
@@ -140,11 +134,12 @@ world_map.addEventListener("click", async (e) => {
       array_of_deaths_cases.push(data1[i].Deaths);
     }
 
+
     function chart2() {
-      const chart1Div = document.getElementById("chart1");
       if (popChart1) {
         popChart1.destroy();
       }
+      const chart1Div = document.getElementById("chart1");
       const chart1Context = chart1Div.getContext("2d");
 
       popChart1 = new Chart(chart1Context, {
@@ -172,14 +167,13 @@ world_map.addEventListener("click", async (e) => {
       });
     }
 
-    chart2();
 
     function chart6() {
-      const abcd5 = document.getElementById("chart5");
-      const abcd51 = abcd5.getContext("2d");
       if (popChart5) {
         popChart5.destroy();
       }
+      const abcd5 = document.getElementById("chart5");
+      const abcd51 = abcd5.getContext("2d");
 
       popChart5 = new Chart(abcd51, {
         type: "line",
@@ -206,9 +200,23 @@ world_map.addEventListener("click", async (e) => {
       });
     }
 
-    chart6();
+    chart2()
+    chart6()
   }
 });
+
+const mouseOverData = async () => {
+  let hoverData = {}
+  const data1 = await all_data();
+  for (let i = 0; i < data1.Countries.length; i++) {
+
+    hoverData[data1.Countries[i].Country] = `Total Cases: ${data1.Countries[i].TotalConfirmed} <br> Total Deaths: ${data1.Countries[i].TotalDeaths}`
+  }
+  return hoverData;
+}
+
+
+
 
 const tooltipDiv = d3
   .select("body")
@@ -220,26 +228,21 @@ const tooltipDiv = d3
 world_map.addEventListener("mouseover", async (e) => {
   e.preventDefault();
   const [x, y] = d3.pointer(e);
-  const titleHtml = e.path[0];
+  const titleHtml = e.toElement
+
   let countrynameDiv = document.querySelector(".country-name");
   if (e.target.tagName === "path") {
     const a = titleHtml.querySelector("country");
     const name_of_country = a.innerHTML;
-
-    const data1 = await get_data1(name_of_country);
-
-    let sum_of_active_cases = 0;
-    let no_of_deaths = 0;
-    for (let i = 0; i < data1.length; i++) {
-      sum_of_active_cases += data1[i].Active;
-      no_of_deaths += data1[i].Deaths;
-    }
-    const tooltipData = `<h4>${name_of_country}</h4>  <p>Active cases: ${sum_of_active_cases}</p><p>Total Deaths: ${no_of_deaths}</p>`;
+    const hoverData1 = await mouseOverData();
+    const tooltipData = `<h4>${name_of_country}</h4>  <p>${hoverData1[name_of_country]}</p>`;
     tooltipDiv.transition().duration(200).style("opacity", 0.9);
     tooltipDiv
       .html(tooltipData)
-      .style("left",  x + 20 + "px")
-      .style("top", y+ 100 + "px");
+      // .style.top = (y + 20) + 'px';
+      // .style.left = (x + 20) + 'px';
+      .style("left", (x + 20) + "px")
+      .style("top", (y + 80) + "px");
   }
 });
 

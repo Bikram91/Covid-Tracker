@@ -1,3 +1,6 @@
+/*!****************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./src/styles/style.css ***!
+  \****************************************************************************************************/
 .map {
   stroke: black;
   stroke-width: 0.7;
@@ -72,10 +75,11 @@ div.tooltip {
   width: 80px;
   height: auto;
   padding: 2px;
-  font: 12px sans-serif;
-  background-color:lightblue;
-  border: 0px;
-  border-radius: 8px;
+  font: 15px sans-serif;
+  /* background-color:lightblue; */
+  background-color: azure;
+  border: 1px;
+  border-radius: 10px;
   pointer-events: none;
 }
 
@@ -188,6 +192,26 @@ nav {
   height: 40px;
 }
 
-*{margin:0px;padding:0px;box-sizing:border-box}
+.loader {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  position: relative;
+  margin: 120px;
+}
 
-/*# sourceMappingURL=main.css.map*/
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
