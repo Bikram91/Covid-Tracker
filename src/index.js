@@ -20,7 +20,6 @@ let map_data = d3.json("./src/scripts/mapdata.JSON");
 const all_data = async (ele) => {
   try {
     let res = await fetch(`./src/scripts/coviddata.JSON`);
-    // console.log(res)
     return await res.json();
   } catch (err) {
     console.error(err);
