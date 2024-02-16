@@ -1,10 +1,9 @@
 import navSlide from "./scripts/navbar";
-import chart1 from "./scripts/chartdata";
 import { Chart, registerables } from "chart.js/auto";
 Chart.register(...registerables);
 navSlide();
-const width = 900;
-const height = 610;
+const width = 890;
+const height = 570;
 
 const svg = d3.select("svg").attr("width", width).attr("height", height);
 
@@ -12,7 +11,7 @@ const svg = d3.select("svg").attr("width", width).attr("height", height);
 const projection = d3
   .geoMercator()
   .scale(140)
-  .translate([width / 2, height / 1.5]);
+  .translate([width / 2, height / 1.4]);
 
 // Load external data and boot
 let map_data = d3.json("./src/scripts/mapdata.JSON");
@@ -34,15 +33,15 @@ async function color() {
     let total_cases = result.Countries[i].TotalConfirmed;
     const countryN = result.Countries[i].Country;
     if (total_cases < 1000) {
-      total_cases = "#D8E0BB";
+      total_cases = "#fcb900";
     } else if (total_cases < 10000 && total_cases > 1000) {
-      total_cases = "#b6cec7";
+      total_cases = "#f78da7";
     } else if (total_cases < 1000000 && total_cases > 10000) {
-      total_cases = "#86a3c3";
+      total_cases = "#ff6900";
     } else if (total_cases < 10000000 && total_cases > 1000000) {
-      total_cases = "#7268A6";
+      total_cases = "#cf2e2e";
     } else if (total_cases < 100000000 && total_cases > 10000000) {
-      total_cases = "#6b3074";
+      total_cases = "rgb(107,0,62)";
     }
     newArr.set(countryN, total_cases);
   }
@@ -66,26 +65,105 @@ color()
     });
   });
 
-const get_data = async (ele) => {
-  if (typeof ele === "undefined") {
-    return "";
-  } else {
-    try {
-      let res = await fetch(
-        `https://api.covid19api.com/country/${ele}?from=2020-03-01T00:00:00Z&to=2022-12-01T00:00:00Z`
-      );
-      return await res.json();
-    } catch (err) {
-      console.error(err);
-    }
+async function get_data_cases(country) {
+  let hash = {}
+  hash["2020-01-22"] = 0;
+  hash["2020-03-22"] = 0;
+  hash["2020-06-22"] = 0;
+  hash["2020-09-22"] = 0;
+  hash["2021-01-22"] = 0;
+  hash["2021-03-22"] = 0;
+  hash["2021-06-22"] = 0;
+  hash["2021-09-22"] = 0;
+  hash["2022-01-22"] = 0;
+  hash["2022-03-22"] = 0;
+  hash["2022-06-22"] = 0;
+  hash["2022-09-22"] = 0;
+  hash["2023-01-22"] = 0
+  hash["2023-03-08"] = 0;
+  
+
+  try {
+      const result = await $.ajax({
+          method: 'GET',
+          url: `https://api.api-ninjas.com/v1/covid19?country=${country}&type=cases`,
+          headers: { 'X-Api-Key': 'Pu1Rm1WZ3pp28zZwBF51AVKJ6fmPnSVFi5hQADj9'},
+          contentType: 'application/json'
+      });
+
+      for (let i = 0; i < result.length; i++) {
+          hash["2020-01-22"] += result[i].cases["2020-01-22"]["total"];
+          hash["2020-03-22"] += result[i].cases["2020-03-22"]["total"];
+          hash["2020-06-22"] += result[i].cases["2020-06-22"]["total"];
+          hash["2020-09-22"] += result[i].cases["2020-09-22"]["total"];
+          hash["2021-01-22"] += result[i].cases["2021-01-22"]["total"];
+          hash["2021-03-22"] += result[i].cases["2021-03-22"]["total"];
+          hash["2021-06-22"] += result[i].cases["2021-06-22"]["total"];
+          hash["2021-09-22"] += result[i].cases["2021-09-22"]["total"];
+          hash["2022-01-22"] += result[i].cases["2022-01-22"]["total"];
+          hash["2022-03-22"] += result[i].cases["2022-03-22"]["total"];
+          hash["2022-06-22"] += result[i].cases["2022-06-22"]["total"];
+          hash["2022-09-22"] += result[i].cases["2022-09-22"]["total"];
+          hash["2023-01-22"] += result[i].cases["2023-01-22"]["total"];
+          hash["2023-03-08"] += result[i].cases["2023-03-08"]["total"];
+      }
+      return hash
+  } catch (error) {
+      console.error('Error: ', error.responseText);
   }
-};
+}
+
+async function get_data_deaths(country) {
+  let hash1 = {}
+  hash1["death2020-01-22"] = 0;
+  hash1["death2020-03-22"] = 0;
+  hash1["death2020-06-22"] = 0;
+  hash1["death2020-09-22"] = 0;
+  hash1["death2021-01-22"] = 0;
+  hash1["death2021-03-22"] = 0;
+  hash1["death2021-06-22"] = 0;
+  hash1["death2021-09-22"] = 0;
+  hash1["death2022-01-22"] = 0;
+  hash1["death2022-03-22"] = 0;
+  hash1["death2022-06-22"] = 0;
+  hash1["death2022-09-22"] = 0;
+  hash1["death2023-01-22"] = 0;
+  hash1["death2023-03-08"] = 0;
+
+  try {
+      const deathRequest = await $.ajax({
+        method: 'GET',
+        url: `https://api.api-ninjas.com/v1/covid19?country=${country}&type=deaths`,
+        headers: { 'X-Api-Key': 'Pu1Rm1WZ3pp28zZwBF51AVKJ6fmPnSVFi5hQADj9'},
+        contentType: 'application/json'
+      });
+
+      for (let i = 0; i < deathRequest.length; i++) {
+        hash1["death2020-01-22"] += deathRequest[i].deaths["2020-01-22"]["total"];
+        hash1["death2020-03-22"] += deathRequest[i].deaths["2020-03-22"]["total"];
+        hash1["death2020-06-22"] += deathRequest[i].deaths["2020-06-22"]["total"];
+        hash1["death2020-09-22"] += deathRequest[i].deaths["2020-09-22"]["total"];
+        hash1["death2021-01-22"] += deathRequest[i].deaths["2021-01-22"]["total"];
+        hash1["death2021-03-22"] += deathRequest[i].deaths["2021-03-22"]["total"];
+        hash1["death2021-06-22"] += deathRequest[i].deaths["2021-06-22"]["total"];
+        hash1["death2021-09-22"] += deathRequest[i].deaths["2021-09-22"]["total"];
+        hash1["death2022-01-22"] += deathRequest[i].deaths["2022-01-22"]["total"];
+        hash1["death2022-03-22"] += deathRequest[i].deaths["2022-03-22"]["total"];
+        hash1["death2022-06-22"] += deathRequest[i].deaths["2022-06-22"]["total"];
+        hash1["death2022-09-22"] += deathRequest[i].deaths["2022-09-22"]["total"];
+        hash1["death2023-01-22"] += deathRequest[i].deaths["2023-01-22"]["total"];
+        hash1["death2023-03-08"] += deathRequest[i].deaths["2023-03-08"]["total"];
+      }
+      return hash1
+  } catch (error) {
+      console.error('Error: ', error.responseText);
+  }
+}
 
 
 let world_map = document.querySelector("#my_dataviz");
 let countryName = document.querySelector("#country-name");
 let countryTotalCases = document.querySelector("#country-total-cases");
-let countryTotalDeaths = document.querySelector("#country-total-deaths");
 let array_of_active_cases = [];
 let array_of_date = [];
 let array_of_deaths_cases = [];
@@ -105,10 +183,11 @@ world_map.addEventListener("click", async (e) => {
     popChart1.destroy();
   }
 
-  const loaderElement = document.querySelector('.loading')
-  const loaderClass = loaderElement.classList.add('loader')
-
-
+  
+  
+  countryName.innerHTML = "Globally";
+  countryTotalCases.innerHTML = "Total Cases: 651,595,573 <br> Total Deaths: 6,652,007";
+  let loaderClass
   e.preventDefault();
   array_of_active_cases = [];
   array_of_deaths_cases = [];
@@ -116,6 +195,8 @@ world_map.addEventListener("click", async (e) => {
   const titleHtml = e.target;
   if (e.target.tagName === "path") {
     const a = titleHtml.querySelector("country");
+    const loaderElement = document.querySelector('.loading')
+    loaderClass = loaderElement.classList.add('loader')
 
     const name_of_country = a.innerHTML;
     countryName.innerHTML = name_of_country;
@@ -123,16 +204,13 @@ world_map.addEventListener("click", async (e) => {
     const clickData = await mouseOverData();
     countryTotalCases.innerHTML = `${clickData[name_of_country]}`
    
-    const data1 = await get_data(name_of_country);
-    const loaderClass = loaderElement.classList.remove('loader')
+    const data1 = await get_data_cases(name_of_country);
+    const data2 = await get_data_deaths(name_of_country);
+    loaderClass = loaderElement.classList.remove('loader')
 
-    for (let i = 0; i < data1.length - 91; i += 90) {
-      array_of_active_cases.push(data1[i].Confirmed);
-
-      array_of_date.push(data1[i].Date.slice(0, 10));
-      array_of_deaths_cases.push(data1[i].Deaths);
-    }
-
+    array_of_active_cases = Object.values(data1);
+    array_of_deaths_cases = Object.values(data2);
+    array_of_date = Object.keys(data1);
 
     function chart2() {
       if (popChart1) {
@@ -224,10 +302,15 @@ const tooltipDiv = d3
   .style("opacity", 0)
   .style("width", "fit-content");
 
+  
+
 world_map.addEventListener("mouseover", async (e) => {
   e.preventDefault();
-  const [x, y] = d3.pointer(e);
-  const titleHtml = e.toElement
+  // const [x, y] = d3.pointer(e);
+  const x = e.clientX;
+  const y = e.clientY;
+
+  const titleHtml = e.toElement  
 
   let countrynameDiv = document.querySelector(".country-name");
   if (e.target.tagName === "path") {
@@ -238,10 +321,8 @@ world_map.addEventListener("mouseover", async (e) => {
     tooltipDiv.transition().duration(200).style("opacity", 0.9);
     tooltipDiv
       .html(tooltipData)
-      // .style.top = (y + 20) + 'px';
-      // .style.left = (x + 20) + 'px';
-      .style("left", (x + 20) + "px")
-      .style("top", (y + 80) + "px");
+      .style("left", (x+15) + "px")
+      .style("top", (y-50) + "px");
   }
 });
 

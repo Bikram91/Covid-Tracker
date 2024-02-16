@@ -25,11 +25,21 @@
 }
 
 #heading {
-  margin: 20px;
+  margin: 10px;
   text-align: center;
   font-size: 40px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   color: indigo;
+}
+
+
+#hand{
+  display: flex;
+  align-items: center;
+  width: 70px;
+  margin-left: 10px;
+  flex-wrap: wrap;
+  align-content: flex-start;
 }
 
 #selected {
@@ -50,7 +60,7 @@
 }
 
 #legend-value {
-  width: 176px;
+  width: 177px;
   height: 16px;
   background-color: white;
   position: absolute;

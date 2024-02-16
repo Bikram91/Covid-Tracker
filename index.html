@@ -19,6 +19,7 @@
     <script src="./dist/main.js" defer></script>
     <title>Covid-19 Tracker</title>
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikiproject_COVID-19_-_logo.svg/640px-Wikiproject_COVID-19_-_logo.svg.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
 
   <body>
@@ -54,8 +55,12 @@
       </div>
     </nav>
     <div id="main">
-      <h1 id="heading">Global Coronavirus Statistics</h1>
+      <h2 id="heading">Global Coronavirus Statistics</h2>
       <div id="meat">
+        <div id="hand">
+          <i class="fa fa-hand-o-right" style="font-size:48px;color:red"></i>
+          <p>Click on country to get data</p>
+        </div>
         <svg id="my_dataviz"></svg>
         <div class="chartBox">
           <div id="selected">
@@ -70,23 +75,24 @@
       </div>
       <h4 style="margin-left: 20px">Total Covid-19 Cases Legend</h4>
       <div id="legend-body">
-        <div id="legend-cell" style="background-color: #d8e0bb">
+        <div id="legend-cell" style="background-color: #fcb900">
           <div id="legend-value"><p>>= 0</p></div>
         </div>
-        <div id="legend-cell" style="background-color: #b6cec7">
+        <div id="legend-cell" style="background-color: #f78da7">
           <div id="legend-value"><p>> 1,000</p></div>
         </div>
-        <div id="legend-cell" style="background-color: #86a3c3">
+        <div id="legend-cell" style="background-color: #ff6900">
           <div id="legend-value"><p>> 10,000</p></div>
         </div>
-        <div id="legend-cell" style="background-color: #7268a6">
+        <div id="legend-cell" style="background-color: #cf2e2e">
           <div id="legend-value"><p>> 1,000,000</p></div>
         </div>
-        <div id="legend-cell" style="background-color: #6b3074">
+        <div id="legend-cell" style="background-color: rgb(107,0,62)">
           <div id="legend-value"><p>> 100,000,000</p></div>
         </div>
       </div>
      
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </body>
 </html>
